@@ -7,7 +7,7 @@ title: Khalil996のBlog
 subtitle: ''
 description: ''
 keywords:
-author: Khalil996
+author: Khalil
 language: en
 timezone: ''
 
@@ -98,11 +98,7 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: butterfly
-
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
-  
-  
-
