@@ -44,7 +44,7 @@ favicon: /img/favicon.png
 
 # Avatar (頭像)
 avatar:
-  img: /workspaces/Khalil996.github.io/public/img/230826.jpg
+  img: https://tse4-mm.cn.bing.net/th/id/OIP-C.qmy30ripP-EXJWETQ6LNdwAAAA?w=202&h=202&c=7&r=0&o=5&pid=1.7
   effect: false
 
 # Disable all banner image
