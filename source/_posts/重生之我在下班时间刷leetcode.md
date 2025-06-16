@@ -1,5 +1,7 @@
+---
 title: 重生之我在下班时间刷leetcode（1）
-date: 2023-06-16 19:00:00
+time: 2023-06-16 19:00:00
+---
 # LeetCode 题解：最大差值（最大差值之间的增量元素）
 
 题目链接：[LeetCode - 最大差值](https://leetcode.cn/problems/maximum-difference-between-increasing-elements/description/?envType=daily-question&envId=2025-06-16)
