@@ -6,17 +6,106 @@
 <meta property="og:image" content="https://tse4-mm.cn.bing.net/th/id/OIP-C.qmy30ripP-EXJWETQ6LNdwAAAA?w=202&h=202&c=7&r=0&o=5&pid=1.7">
 <meta property="article:author" content="Khalil">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://tse4-mm.cn.bing.net/th/id/OIP-C.qmy30ripP-EXJWETQ6LNdwAAAA?w=202&h=202&c=7&r=0&o=5&pid=1.7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://khalil996.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://tse4-mm.cn.bing.net/th/id/OIP-C.qmy30ripP-EXJWETQ6LNdwAAAA?w=202&h=202&c=7&r=0&o=5&pid=1.7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://khalil996.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: undefined,
   translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
   },
   relativeDate: {
     homepage: false,
@@ -24,23 +113,21 @@
   },
   runtime: '',
   dateSuffix: {
-    just: 'Just',
+    just: 'Just now',
     min: 'minutes ago',
     hour: 'hours ago',
     day: 'days ago',
     month: 'months ago'
   },
   copyright: undefined,
-  lightbox: 'fancybox',
+  lightbox: 'null',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
   },
   isPhotoFigcaption: false,
-  islazyload: false,
+  islazyloadPlugin: false,
   isAnchor: false,
   percent: {
     toc: true,
@@ -49,167 +136,26 @@
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'Khalil996のBlog',
-  isPost: false,
-  isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2023-10-02 09:08:49'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
-    }
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://w.wallhaven.cc/full/2y/wallhaven-2y322g.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Khalil996のBlog</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">Khalil996のBlog</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/hello-template/" title="Hexo Template">Hexo Template</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></span></div><div class="content"> A fast, simple &amp; powerful blog framework, powered by Node.js. Here is the template of it.  Demo | Official Website | Documentation | GitHub CI&#x2F;CDThis repository uses GitHub Actions for CI&#x2F;CD. You don’t need to build your documents manually. Just commit your documents (then run git push), and then turn on the GitHub Pages in the settings to access your online documents. (For this demo is https://mmdjiji.github.io/hexo-template) !!! Attention !!!There are two lines to modify in...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day1/" title="打卡Day1">打卡Day1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></span></div><div class="content">算法每日打卡题目：给你一棵 n 个节点的树，编号从 0 到 n - 1 ，以父节点数组 parent 的形式给出，其中 parent[i] 是第 i 个节点的父节点。树的根节点为 0 号节点，所以 parent[0] = -1 ，因为它没有父节点。你想要设计一个数据结构实现树里面对节点的加锁，解锁和升级操作。 数据结构需要支持如下函数：  **Lock：**指定用户给指定节点 上锁 ，上锁后其他用户将无法给同一节点上锁。只有当节点处于未上锁的状态下，才能进行上锁操作。 **Unlock：**指定用户给指定节点 解锁 ，只有当指定节点当前正被指定用户锁住时，才能执行该解锁操作。 **Upgrade：**指定用户给指定节点 上锁 ，并且将该节点的所有子孙节点 解锁 。只有如下 3 个条件全部满足时才能执行升级操作： 指定节点当前状态为未上锁。 指定节点至少有一个上锁状态的子孙节点（可以是 任意 用户上锁的）。 指定节点没有任何上锁的祖先节点。    请你实现 LockingTree 类：  LockingTree(int[] parent)...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day2/" title="打卡Day2">打卡Day2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></span></div><div class="content">算法打卡题目：请你设计并实现一个满足 LRU (最近最少使用) 缓存 约束的数据结构。 实现 LRUCache 类：  LRUCache(int capacity) 以 正整数 作为容量 capacity 初始化 LRU 缓存 int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。 void put(int key, int value) 如果关键字 key 已经存在，则变更其数据值 value ；如果不存在，则向缓存中插入该组 key-value 。如果插入操作导致关键字数量超过 capacity ，则应该 逐出 最久未使用的关键字。  函数 get 和 put 必须以 O(1) 的平均时间复杂度运行。 示例：1234567891011121314151617输入[&quot;LRUCache&quot;, &quot;put&quot;, &quot;put&quot;, &quot;get&quot;, &quot;put&quot;, &quot;get&quot;, &quot;put&quot;,...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day3/" title="打卡Day3">打卡Day3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></span></div><div class="content">算法每日打开题目：3. 无重复字符的最长子串给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。 示例 1: 123输入: s = &quot;abcabcbb&quot;输出: 3 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。  示例 2: 123输入: s = &quot;bbbbb&quot;输出: 1解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。  示例 3: 1234输入: s = &quot;pwwkew&quot;输出: 3解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。     请注意，你的答案必须是 子串 的长度，&quot;pwke&quot; 是一个子序列，不是子串。  提示：  0 &lt;= s.length &lt;= 5 * 104 s...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day4/" title="打卡Day4">打卡Day4</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></span></div><div class="content">每日打开题目：1333. 餐厅过滤器 给你一个餐馆信息数组 restaurants，其中 restaurants[i] = [idi, ratingi, veganFriendlyi, pricei, distancei]。你必须使用以下三个过滤器来过滤这些餐馆信息。 其中素食者友好过滤器 veganFriendly 的值可以为 true 或者 false，如果为 true 就意味着你应该只包括 veganFriendlyi 为 true 的餐馆，为 false 则意味着可以包括任何餐馆。此外，我们还有最大价格 maxPrice 和最大距离 maxDistance 两个过滤器，它们分别考虑餐厅的价格因素和距离因素的最大值。 过滤后返回餐馆的 *id*，按照 rating 从高到低排序。如果 rating 相同，那么按 id 从高到低排序。简单起见， veganFriendlyi 和 veganFriendly 为 true 时取值为 1，为 false 时，取值为 0 。 示例 1： 12345678910输入：restaurants =...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day5/" title="算法每日打卡">算法每日打卡</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></span></div><div class="content">每日算法打卡题目：123. 买卖股票的最佳时机 III给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。 设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。 **注意：**你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。 示例 1: 1234输入：prices = [3,3,5,0,0,3,1,4]输出：6解释：在第 4 天（股票价格 = 0）的时候买入，在第 6 天（股票价格 = 3）的时候卖出，这笔交易所能获得利润 = 3-0 = 3 。     随后，在第 7 天（股票价格 = 1）的时候买入，在第 8 天 （股票价格 = 4）的时候卖出，这笔交易所能获得利润 = 4-1 = 3 。  示例 2： 12345输入：prices = [1,2,3,4,5]输出：4解释：在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。        注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。       ...</div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.qmy30ripP-EXJWETQ6LNdwAAAA?w=202&amp;h=202&amp;c=7&amp;r=0&amp;o=5&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Khalil</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Khalil996"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/hello-template/" title="Hexo Template">Hexo Template</a><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%89%93%E5%8D%A1Day1/" title="打卡Day1">打卡Day1</a><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%89%93%E5%8D%A1Day2/" title="打卡Day2">打卡Day2</a><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%89%93%E5%8D%A1Day3/" title="打卡Day3">打卡Day3</a><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%89%93%E5%8D%A1Day4/" title="打卡Day4">打卡Day4</a><time datetime="2025-06-16T12:51:25.907Z" title="Created 2025-06-16 12:51:25">2025-06-16</time></div></div></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
+      
+    </div>
   
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      if (id) link.id = id
-      link.onerror = reject
-      link.onload = link.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        link.onload = link.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.qmy30ripP-EXJWETQ6LNdwAAAA?w=202&amp;h=202&amp;c=7&amp;r=0&amp;o=5&amp;pid=1.7" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://w.wallhaven.cc/full/2y/wallhaven-2y322g.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Khalil996のBlog"><span class="site-name">Khalil996のBlog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Khalil996のBlog</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/hello-template/" title="Hexo Template">Hexo Template</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></span></div><div class="content">
-A fast, simple &amp; powerful blog framework, powered by Node.js. Here is the template of it.
-
-Demo | Official Website | Documentation | GitHub
-CI&#x2F;CDThis repository uses GitHub Actions for CI&#x2F;CD. You don’t need to build your documents manually. Just commit your documents (then run git push), and then turn on the GitHub Pages in the settings to access your online documents. (For this demo is https://mmdjiji.github.io/hexo-template)
-!!! Attention !!!There are two lines to modify in _con ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day1/" title="打卡Day1">打卡Day1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></span></div><div class="content">算法每日打卡题目：给你一棵 n 个节点的树，编号从 0 到 n - 1 ，以父节点数组 parent 的形式给出，其中 parent[i] 是第 i 个节点的父节点。树的根节点为 0 号节点，所以 parent[0] = -1 ，因为它没有父节点。你想要设计一个数据结构实现树里面对节点的加锁，解锁和升级操作。
-数据结构需要支持如下函数：
-
-Lock：指定用户给指定节点 上锁 ，上锁后其他用户将无法给同一节点上锁。只有当节点处于未上锁的状态下，才能进行上锁操作。
-Unlock：指定用户给指定节点 解锁 ，只有当指定节点当前正被指定用户锁住时，才能执行该解锁操作。
-Upgrade：指定用户给指定节点 上锁 ，并且将该节点的所有子孙节点 解锁 。只有如下 3 个条件全部满足时才能执行升级操作：
-指定节点当前状态为未上锁。
-指定节点至少有一个上锁状态的子孙节点（可以是 任意 用户上锁的）。
-指定节点没有任何上锁的祖先节点。
-
-
-
-请你实现 LockingTree 类：
-
-LockingTree(int[] parent) 用父节点数组初始化数据结构。
-lock(int num, int use ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day2/" title="打卡Day2">打卡Day2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></span></div><div class="content">算法打卡题目：请你设计并实现一个满足 LRU (最近最少使用) 缓存 约束的数据结构。
-实现 LRUCache 类：
-
-LRUCache(int capacity) 以 正整数 作为容量 capacity 初始化 LRU 缓存
-int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。
-void put(int key, int value) 如果关键字 key 已经存在，则变更其数据值 value ；如果不存在，则向缓存中插入该组 key-value 。如果插入操作导致关键字数量超过 capacity ，则应该 逐出 最久未使用的关键字。
-
-函数 get 和 put 必须以 O(1) 的平均时间复杂度运行。
-示例：1234567891011121314151617输入[&quot;LRUCache&quot;, &quot;put&quot;, &quot;put&quot;, &quot;get&quot;, &quot;put&quot;, &quot;get&quot;, &quot;put&quot;, &quot;get&quo ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day3/" title="打卡Day3">打卡Day3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></span></div><div class="content">算法每日打开题目：3. 无重复字符的最长子串给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
-示例 1:
-123输入: s = &quot;abcabcbb&quot;输出: 3 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。
-
-示例 2:
-123输入: s = &quot;bbbbb&quot;输出: 1解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。
-
-示例 3:
-1234输入: s = &quot;pwwkew&quot;输出: 3解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。     请注意，你的答案必须是 子串 的长度，&quot;pwke&quot; 是一个子序列，不是子串。
-
-提示：
-
-0 &lt;= s.length &lt;= 5 * 104
-s 由英文字母、数字、符号和空格组成
-
-题解：这题的思路大概就是使用滑动窗口来实现，利用俩个指针，当我们的左指针指定起始位置时，右指针开始从其实指针开始右移，当遇到重复的字符时，将记录该长度然后 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day4/" title="打卡Day4">打卡Day4</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></span></div><div class="content">每日打开题目：1333. 餐厅过滤器
-给你一个餐馆信息数组 restaurants，其中 restaurants[i] = [idi, ratingi, veganFriendlyi, pricei, distancei]。你必须使用以下三个过滤器来过滤这些餐馆信息。
-其中素食者友好过滤器 veganFriendly 的值可以为 true 或者 false，如果为 true 就意味着你应该只包括 veganFriendlyi 为 true 的餐馆，为 false 则意味着可以包括任何餐馆。此外，我们还有最大价格 maxPrice 和最大距离 maxDistance 两个过滤器，它们分别考虑餐厅的价格因素和距离因素的最大值。
-过滤后返回餐馆的 ***id***，按照 rating 从高到低排序。如果 rating 相同，那么按 id 从高到低排序。简单起见， veganFriendlyi 和 veganFriendly 为 true 时取值为 1，为 false 时，取值为 0 。
-示例 1：
-12345678910输入：restaurants = [[1,4,1,40,10],[2,8 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/%E6%89%93%E5%8D%A1Day5/" title="算法每日打卡">算法每日打卡</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></span></div><div class="content">每日算法打卡题目：123. 买卖股票的最佳时机 III给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
-设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。
-注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
-示例 1:
-1234输入：prices = [3,3,5,0,0,3,1,4]输出：6解释：在第 4 天（股票价格 = 0）的时候买入，在第 6 天（股票价格 = 3）的时候卖出，这笔交易所能获得利润 = 3-0 = 3 。     随后，在第 7 天（股票价格 = 1）的时候买入，在第 8 天 （股票价格 = 4）的时候卖出，这笔交易所能获得利润 = 4-1 = 3 。
-
-示例 2：
-12345输入：prices = [1,2,3,4,5]输出：4解释：在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。        注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。        因为这样属于同时参与了多笔交易，你必须在再 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.qmy30ripP-EXJWETQ6LNdwAAAA?w=202&amp;h=202&amp;c=7&amp;r=0&amp;o=5&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Khalil</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Khalil996"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/hello-template/" title="Hexo Template">Hexo Template</a><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%89%93%E5%8D%A1Day1/" title="打卡Day1">打卡Day1</a><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%89%93%E5%8D%A1Day2/" title="打卡Day2">打卡Day2</a><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%89%93%E5%8D%A1Day3/" title="打卡Day3">打卡Day3</a><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%89%93%E5%8D%A1Day4/" title="打卡Day4">打卡Day4</a><time datetime="2023-10-02T09:08:25.091Z" title="Created 2023-10-02 09:08:25">2023-10-02</time></div></div></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">October 2023</span><span class="card-archive-list-count">6</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">6</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Push :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-10-02T09:08:49.048Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Khalil</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/06/">
+            <span class="card-archive-list-date">
+              June 2025
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">6</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-06-16T12:51:38.170Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Khalil</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
