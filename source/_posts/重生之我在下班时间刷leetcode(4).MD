@@ -3,8 +3,6 @@
 title: 重生之我在下班时间刷leetcode（4）
 date: 2025-06-19 21:01:00
 ---
-
-
 # LeetCode 题解：将数组分割成多个子数组，使每组最大差值小于等于 k
 
 题目链接：[LeetCode - Partition Array Such That Maximum Difference Is K](https://leetcode.cn/problems/partition-array-such-that-maximum-difference-is-k/?envType=daily-question&envId=2025-06-19)
