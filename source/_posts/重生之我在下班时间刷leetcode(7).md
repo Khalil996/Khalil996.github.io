@@ -1,9 +1,8 @@
 
 ---
-title:重生之我在下班时间刷leetcode（7）
-date:2025-06-23 21:00:00
+title: 重生之我在下班时间刷leetcode（7）
+date: 2025-06-23 15:00:00
 ---
-
 
 # LeetCode 题解：k 镜像数字的和
 
